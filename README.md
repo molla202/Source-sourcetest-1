@@ -25,13 +25,13 @@
 | ✔️ Storage	| 300GB+ SSD |
 
 
-### Update ve güncellemeler
+### 🚧 Update ve güncellemeler
 ```
 sudo apt update && sudo apt upgrade -y
 sudo apt install curl git wget htop tmux build-essential jq make lz4 gcc unzip -y
 ```
 
-### Go kurulumu
+### 🚧 Go kurulumu
 ```
 cd $HOME
 ! [ -x "$(command -v go)" ] && {
@@ -46,8 +46,8 @@ source $HOME/.bash_profile
 }
 [ ! -d ~/go/bin ] && mkdir -p ~/go/bin
 ```
-### Varyasyonları ayarlayalım
-Not: cüzdan adı ve node adınızı giriniz
+### 🚧 Varyasyonları ayarlayalım
+👉 Not: cüzdan adı ve node adınızı giriniz
 ```
 echo "export WALLET="cüzdan-adı"" >> $HOME/.bash_profile
 echo "export MONIKER="node-adı"" >> $HOME/.bash_profile
@@ -55,7 +55,7 @@ echo "export SOURCE_CHAIN_ID="sourcetest-1"" >> $HOME/.bash_profile
 echo "export SOURCE_PORT="24"" >> $HOME/.bash_profile
 source $HOME/.bash_profile
 ```
-### Dosyaları çekelim ve kuralım
+### 🚧 Dosyaları çekelim ve kuralım
 ```
 cd $HOME
 rm -rf source
@@ -64,26 +64,26 @@ cd source
 git checkout v3.0.0
 make install
 ```
-### Ağı başlatalım
-Not: node adınızı yazınız
+### 🚧 Ağı başlatalım
+👉 Not: node adınızı yazınız
 ```
 sourced config node tcp://localhost:${SOURCE_PORT}657
 sourced config keyring-backend os
 sourced config chain-id sourcetest-1
 sourced init "node-adı" --chain-id sourcetest-1
 ```
-### Genesis ve adressbook
+### 🚧Genesis ve adressbook
 ```
 wget -O $HOME/.source/config/genesis.json https://testnet-files.itrocket.net/source/genesis.json
 wget -O $HOME/.source/config/addrbook.json https://testnet-files.itrocket.net/source/addrbook.json
 ```
-### Seeds ve peer ayarları
+### 🚧 Seeds ve peer ayarları
 ```
 SEEDS="eca738b67fd23381f9a72717bea757c1d291ed2b@source-testnet-seed.itrocket.net:24656"
 PEERS="a47f3b354e75478c0dfe22ad2b937ad07c9bcf3c@source-testnet-peer.itrocket.net:24656,06885ec73c228de552c4120ab50c78152b20fc9d@162.19.236.64:26656,6cbd311e49982122e3b28549302d5666c53ed0cf@65.109.104.118:61056,e127f3f7277b76887423458d8f775e33f58ff80a@65.109.65.248:28656,854048fcfb453297742b76cc5c6b7555eeb25110@213.239.207.175:31656,636c7206a1a9a817768766a1f243d27398159028@144.76.97.251:36656,8145d4d13511e7f89dbd257f51ed5d076941f12f@164.92.98.12:26656,330b14f94d3bbe6c4059f31bd8fbf9960cf1387e@185.144.99.3:26656,a98484ac9cb8235bd6a65cdf7648107e3d14dab4@116.202.231.58:12856,dc6b2c1fcb38aa42c750adc73875660655dacb4a@173.249.45.4:26656,7659c361ca4b0bbbe118d0b91c390e1ad51f7c2c@65.21.248.172:26656"
 sed -i -e "s/^seeds *=.*/seeds = \"$SEEDS\"/; s/^persistent_peers *=.*/persistent_peers = \"$PEERS\"/" $HOME/.source/config/config.toml
 ```
-### Portları ayarlayalım
+### 🚧 Portları ayarlayalım
 ```
 sed -i.bak -e "s%:1317%:${SOURCE_PORT}317%g;
 s%:8080%:${SOURCE_PORT}080%g;
@@ -101,19 +101,19 @@ s%:26656%:${SOURCE_PORT}656%g;
 s%^external_address = \"\"%external_address = \"$(wget -qO- eth0.me):${SOURCE_PORT}656\"%;
 s%:26660%:${SOURCE_PORT}660%g" $HOME/.source/config/config.toml
 ```
-### Puring
+### 🚧 Puring
 ```
 sed -i -e "s/^pruning *=.*/pruning = \"nothing\"/" $HOME/.source/config/app.toml
 sed -i -e "s/^pruning-keep-recent *=.*/pruning-keep-recent = \"100\"/" $HOME/.source/config/app.toml
 sed -i -e "s/^pruning-interval *=.*/pruning-interval = \"50\"/" $HOME/.source/config/app.toml
 ```
-### Gas prometeus ve indexer ayarı
+### 🚧 Gas prometeus ve indexer ayarı
 ```
 sed -i 's/minimum-gas-prices =.*/minimum-gas-prices = "1usource"/g' $HOME/.source/config/app.toml
 sed -i -e "s/prometheus = false/prometheus = true/" $HOME/.source/config/config.toml
 sed -i -e "s/^indexer *=.*/indexer = \"null\"/" $HOME/.source/config/config.toml
 ```
-### Servis oluşturalım
+### 🚧 Servis oluşturalım
 ```
 sudo tee /etc/systemd/system/sourced.service > /dev/null <<EOF
 [Unit]
@@ -130,7 +130,7 @@ LimitNOFILE=65535
 WantedBy=multi-user.target
 EOF
 ```
-### Snap atalım
+### 🚧 Snap atalım
 ```
 sourced tendermint unsafe-reset-all --home $HOME/.source
 if curl -s --head curl https://testnet-files.itrocket.net/source/snap_source.tar.lz4 | head -n 1 | grep "200" > /dev/null; then
@@ -139,17 +139,17 @@ if curl -s --head curl https://testnet-files.itrocket.net/source/snap_source.tar
   echo no have snap
 fi
 ```
-### Başlatalım
+### 🚧 Başlatalım
 ```
 sudo systemctl daemon-reload
 sudo systemctl enable sourced
 sudo systemctl restart sourced
 ```
-### Loglara bakalım
+### 🚧 Loglara bakalım
 ```
 sudo journalctl -u sourced -f
 ```
-### Cüzdan oluşturalım
+### 🚧 Cüzdan oluşturalım
 ```
 sourced keys add cüzdan-adınız
 ```
@@ -157,7 +157,7 @@ sourced keys add cüzdan-adınız
 ```
 sourced keys add cüzdan-adınız --recover
 ```
-### Validator olusturalım
+### 🚧 Validator olusturalım
 Not: moniker ve cüzdan adınızı yazınız
 ```
 sourced tx staking create-validator \
