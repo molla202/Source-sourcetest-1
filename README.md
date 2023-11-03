@@ -4,7 +4,7 @@
 
 🌟 [Source Protocol Discord](https://discord.gg/MuPN6kJbCK)
 
-🌟 [Source Protocol Explorer](https://mainnet.itrocket.net/source/staking/sourcevaloper12xtalgwjakzdz4q8s05zkm0a3nkr5wlua77q2k)
+🌟 [Source Protocol Explorer](https://testnet.itrocket.net/source/staking)
 
 🔥 [CoreNode Telegram](https://t.me/corenode)
 
@@ -20,9 +20,9 @@
  ## 💻 Sistem Gereksinimleri
 | Bileşenler | Minimum Gereksinimler | 
 | ------------ | ------------ |
-| ✔️ CPU |	8+ |
-| ✔️ RAM	| 16+ GB |
-| ✔️ Storage	| 500GB+ SSD |
+| ✔️ CPU |	4+ |
+| ✔️ RAM	| 8+ GB |
+| ✔️ Storage	| 300GB+ SSD |
 
 
 ### 🚧 Update ve güncellemeler
@@ -49,10 +49,10 @@ source $HOME/.bash_profile
 ### 🚧 Varyasyonları ayarlayalım
 👉 Not: cüzdan adı ve node adınızı giriniz
 ```
-echo "export WALLET="wallet"" >> $HOME/.bash_profile
-echo "export MONIKER="test"" >> $HOME/.bash_profile
-echo "export SOURCE_CHAIN_ID="source-1"" >> $HOME/.bash_profile
-echo "export SOURCE_PORT="32"" >> $HOME/.bash_profile
+echo "export WALLET="cüzdan-adı"" >> $HOME/.bash_profile
+echo "export MONIKER="node-adı"" >> $HOME/.bash_profile
+echo "export SOURCE_CHAIN_ID="sourcetest-1"" >> $HOME/.bash_profile
+echo "export SOURCE_PORT="24"" >> $HOME/.bash_profile
 source $HOME/.bash_profile
 ```
 ### 🚧 Dosyaları çekelim ve kuralım
@@ -69,18 +69,18 @@ make install
 ```
 sourced config node tcp://localhost:${SOURCE_PORT}657
 sourced config keyring-backend os
-sourced config chain-id source-1
-sourced init "test" --chain-id source-1
+sourced config chain-id sourcetest-1
+sourced init "node-adı" --chain-id sourcetest-1
 ```
 ### 🚧Genesis ve adressbook
 ```
-wget -O $HOME/.source/config/genesis.json https://mainnet-files.itrocket.net/source/genesis.json
-wget -O $HOME/.source/config/addrbook.json https://mainnet-files.itrocket.net/source/addrbook.json
+wget -O $HOME/.source/config/genesis.json https://testnet-files.itrocket.net/source/genesis.json
+wget -O $HOME/.source/config/addrbook.json https://testnet-files.itrocket.net/source/addrbook.json
 ```
 ### 🚧 Seeds ve peer ayarları
 ```
-SEEDS="7347b05f140e4ed5d3da7b26c754a486dc1d2ecd@source-mainnet-seed.itrocket.net:32656"
-PEERS="8a812024b8a5b4539878b03ac2f822655831ca5f@source-mainnet-peer.itrocket.net:32656,d3480c6dd884f695e73afc779ca4119224e1d396@89.163.157.252:30656,8b7fd04ce47825b030daf93a20ed63a5422c6471@65.109.94.250:30656,2bf28f66b5240fc8010181aa840515ed46906b93@65.109.24.82:28656,3a3c70cf92899cf7fedc9ceb135c6c64209b42aa@159.69.155.107:26656,bb2263aa7006d52aff93bb40841f0dd486a99463@86.48.2.235:26656,5ac19cb6766f29813bb5c515f7f17d5b2cd972db@173.249.45.4:26656,29aaebc5b17674c3529ac1a4a4d040824aba64fa@54.202.237.247:26656,a43ca8d53c5bc6727dd2eebe7b1a1350bcecbae6@135.181.198.246:26656,0107ac60e43f3b3d395fea706cb54877a3241d21@35.87.85.162:26656,96d63849a529a15f037a28c276ea6e3ac2449695@34.222.1.252:26656"
+SEEDS="eca738b67fd23381f9a72717bea757c1d291ed2b@source-testnet-seed.itrocket.net:24656"
+PEERS="a47f3b354e75478c0dfe22ad2b937ad07c9bcf3c@source-testnet-peer.itrocket.net:24656,06885ec73c228de552c4120ab50c78152b20fc9d@162.19.236.64:26656,6cbd311e49982122e3b28549302d5666c53ed0cf@65.109.104.118:61056,e127f3f7277b76887423458d8f775e33f58ff80a@65.109.65.248:28656,854048fcfb453297742b76cc5c6b7555eeb25110@213.239.207.175:31656,636c7206a1a9a817768766a1f243d27398159028@144.76.97.251:36656,8145d4d13511e7f89dbd257f51ed5d076941f12f@164.92.98.12:26656,330b14f94d3bbe6c4059f31bd8fbf9960cf1387e@185.144.99.3:26656,a98484ac9cb8235bd6a65cdf7648107e3d14dab4@116.202.231.58:12856,dc6b2c1fcb38aa42c750adc73875660655dacb4a@173.249.45.4:26656,7659c361ca4b0bbbe118d0b91c390e1ad51f7c2c@65.21.248.172:26656"
 sed -i -e "s/^seeds *=.*/seeds = \"$SEEDS\"/; s/^persistent_peers *=.*/persistent_peers = \"$PEERS\"/" $HOME/.source/config/config.toml
 ```
 ### 🚧 Portları ayarlayalım
@@ -109,7 +109,7 @@ sed -i -e "s/^pruning-interval *=.*/pruning-interval = \"50\"/" $HOME/.source/co
 ```
 ### 🚧 Gas prometeus ve indexer ayarı
 ```
-sed -i 's/minimum-gas-prices =.*/minimum-gas-prices = "0.25usource"/g' $HOME/.source/config/app.toml
+sed -i 's/minimum-gas-prices =.*/minimum-gas-prices = "1usource"/g' $HOME/.source/config/app.toml
 sed -i -e "s/prometheus = false/prometheus = true/" $HOME/.source/config/config.toml
 sed -i -e "s/^indexer *=.*/indexer = \"null\"/" $HOME/.source/config/config.toml
 ```
@@ -133,8 +133,8 @@ EOF
 ### 🚧 Snap atalım
 ```
 sourced tendermint unsafe-reset-all --home $HOME/.source
-if curl -s --head curl https://mainnet-files.itrocket.net/source/snap_source.tar.lz4 | head -n 1 | grep "200" > /dev/null; then
-  curl https://mainnet-files.itrocket.net/source/snap_source.tar.lz4 | lz4 -dc - | tar -xf - -C $HOME/.source
+if curl -s --head curl https://testnet-files.itrocket.net/source/snap_source.tar.lz4 | head -n 1 | grep "200" > /dev/null; then
+  curl https://testnet-files.itrocket.net/source/snap_source.tar.lz4 | lz4 -dc - | tar -xf - -C $HOME/.source
     else
   echo no have snap
 fi
@@ -171,8 +171,8 @@ sourced tx staking create-validator \
 --moniker "moniker-yazınız" \
 --identity "" \
 --details "" \
---chain-id source-1 \
---fees 500000usource \
+--chain-id sourcetest-1 \
+--fees 200000usource \
 -y
 ```
 ### Node silme
@@ -184,6 +184,5 @@ sudo rm $(which sourced)
 sudo rm -rf $HOME/.source
 sed -i "/SOURCE_/d" $HOME/.bash_profile
 ```
-
 
 
