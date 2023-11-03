@@ -4,7 +4,7 @@
 
 🌟 [Source Protocol Discord](https://discord.gg/MuPN6kJbCK)
 
-🌟 [Source Protocol Explorer](https://testnet.itrocket.net/source/staking)
+🌟 [Source Protocol Explorer](https://mainnet.itrocket.net/source/staking/sourcevaloper12xtalgwjakzdz4q8s05zkm0a3nkr5wlua77q2k)
 
 🔥 [CoreNode Telegram](https://t.me/corenode)
 
